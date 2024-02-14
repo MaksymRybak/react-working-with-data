@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "seed-data": "ts-node ./src/lib/prisma/seed.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "resetdb": "npx prisma migrate reset --force || true && npx prisma generate && npx prisma migrate dev --name init && sleep 5 && npx prisma db seed"
+  },
+  "prisma": {
+    "seed": "ts-node src/lib/prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.9.1",
