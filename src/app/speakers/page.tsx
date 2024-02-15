@@ -5,11 +5,21 @@ import { Speaker } from "@/lib/general-types";
 
 type LoadingStatusType = "loading" | "success" | "error";
 
+type SpeakerState = {
+  speakerList: Speaker[],
+  loadingStatus: LoadingStatusType,
+  error: string | undefined,
+}
+
 export default function Speakers() {
 
-  const [speakerList, setSpeakerList] = useState<Speaker[]>([]);
-  const [loadingStatus, setLoadingStatus] = useState<LoadingStatusType>('loading');
-  const [error, setError] = useState<string | undefined>(undefined);
+  const initialState: SpeakerState = {
+    speakerList: [],
+    loadingStatus: 'loading',
+    error: undefined,
+  }
+
+  const [speakerState, setSpeakerState] = useState<SpeakerState>(initialState);
 
   useEffect(() => {
 
@@ -17,16 +27,17 @@ export default function Speakers() {
       try {
         const res = await fetch('/api/speakers');
         const data = await res.json();
-        setSpeakerList(data);
-        setLoadingStatus('success');
+        setSpeakerState({
+          speakerList: data,
+          loadingStatus: 'success',
+          error: undefined,
+        });
       } catch (err) {
-        setLoadingStatus('error');
-        if (err instanceof Error) {
-          const errMsg = err.message || 'an error happened';
-          setError(errMsg);
-        } else {
-          setError('an error happened');
-        }
+        setSpeakerState({
+          ...speakerState,
+          loadingStatus: 'error',
+          error: err instanceof Error ? err.message || 'an error happened' :  'an error happened',
+        })
       }
     }
 
@@ -34,18 +45,18 @@ export default function Speakers() {
 
   }, []);
 
-  if (loadingStatus === "error") {
-    return <div className="card">Error: {error}</div>;
+  if (speakerState.loadingStatus === "error") {
+    return <div className="card">Error: {speakerState.error}</div>;
   }
 
-  if (loadingStatus === "loading") {
+  if (speakerState.loadingStatus === "loading") {
     return <div>Loading ...</div>;
   }
 
   return (
     <div className="container">
       <div className="row g-4">
-        {speakerList.map((speaker: Speaker) => (
+        {speakerState.speakerList.map((speaker: Speaker) => (
           <SpeakerDetail key={speaker.id}
             speaker={speaker} />
         ))}
