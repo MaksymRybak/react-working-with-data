@@ -1,13 +1,21 @@
 'use client';
-import { useState } from "react";
 
-export default function Home() {
-  const [counter, setCounter] = useState(100);
+import Footer from "./footer";
+import Header from "./header";
+import Home from "./home";
+import Nav from "./nav";
 
+export default function HomePage() {
+  
   return (
-    <div>
-      <div>Hello React</div>
-      <button onClick={() => {setCounter(counter + 1)}}>Count {counter}</button>
+    <div className="container-fluid">
+      <Header />
+      <div className="full-page-border app-content-background">
+        <Nav />
+        <Home />
+      </div>
+      <Footer />
     </div>
   );
+
 }

@@ -53,7 +53,7 @@ export default function SpeakerDataProvider({ children }: SpeakerDataProviderPro
 
     go();
 
-  }, [speakerState]);
+  }, []);
 
   return (
     <SpeakerDataContext.Provider value={{ speakerState }}>
