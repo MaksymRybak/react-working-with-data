@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import FooterSubscribe from "./footer-subscribe";
 
 const Footer = () => {
   return (
@@ -15,9 +16,7 @@ const Footer = () => {
           </div>
 
           <div className="col-lg-4 col-md-6 mb-4 mb-md-0">
-            <h5 className="text-uppercase mb-4">
-              Keep up to date on social media
-            </h5>
+            <FooterSubscribe />
           </div>
 
           <div className="col-lg-4 col-md-6 mb-4 mb-md-0">
